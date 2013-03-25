@@ -45,13 +45,14 @@ Would love to have a timeline view on this thing! :D
 			<tr>
 				<th>Time</th>
 				<th>Alarm</th>
-				<th><button ng-click="clearExpiredAlarm()">Clear!</button></th>
+				<th><button ng-click="clearExpiredAlarms()">Clear!</button></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="expiredAlarm in expiredAlarms>">
+			<tr ng-repeat="expiredAlarm in expiredAlarms">
 				<td>{{expiredAlarm.time}}</td>
-				<td>{{expiredAlarm.name}}</td>
+				<td>{{expiredAlarm.text}}</td>
+				<td><button ng-click="removeExpiredAlarm()">Remove</button></td>
 			</tr>
 		</tbody>
 	</table>
@@ -68,9 +69,10 @@ Would love to have a timeline view on this thing! :D
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="alarm in alarms>">
+			<tr ng-repeat="alarm in alarms">
 				<td>{{alarm.timeRemaining}}</td>
-				<td>{{alarm.name}}</td>
+				<td>{{alarm.text.toString()}}</td>
+				<td><button ng-click="editUpcomingAlarms()">Edit</button></td>
 			</tr>
 		</tbody>
 	</table>

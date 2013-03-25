@@ -4,7 +4,8 @@
 
 
 ////////////////////////// DRAWING OF THE CLOCK FACE /////////////////////
-
+// SOURCE: www.script-tutorials.com/html5-clocks/
+// Thank you for the wonderful sample code! :D
 // draw functions :
 function clear(ctx) { // clear canvas function
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -85,8 +86,22 @@ function drawClockFace(canvas, ctx, clockImage, clockRadius) { // main drawClock
 
 ////////////////////////////////////////////////////////////////////////
 function ClockController($scope, $timeout) {
-	$scope.expiredAlarms = [10, 20, 30, 40];
-	$scope.alarms = ["hello", "giuys"];
+	var curTime = new Date();
+	$scope.expiredAlarms = [];
+	for (var i = 0; i < 3; i++){
+		var expAlarm = new Object();
+		expAlarm.time = curTime;
+		expAlarm.text = "expAlarm" + toString(i);
+		$scope.expiredAlarms.push(expAlarm);
+	};
+	
+	$scope.alarms = [];
+	for (var i = 0; i < 3; i++){
+		var alarm = new Object();
+		alarm.timeRemaining = curTime;
+		alarm.text = "alarm" + toString(i);
+		$scope.alarms.push(alarm);
+	};
 	$scope.clockRadius = 250;
 
 	var myTimeout = $timeout($scope.onTimeout, 1000);
@@ -107,6 +122,23 @@ function ClockController($scope, $timeout) {
 	};
 
 	var myTimeout = $timeout($scope.onTimeout, 1000);
+	/////////// VARIOUS METHODS FOR HANDLING LISTS OF ALARMS////
+	
+	$scope.clearExpiredAlarms = function() {
+		$scope.expiredAlarms.length = 0;
+	};
+	$scope.removeExpiredAlarm = function() {
+	
+	};
+	
+	$scope.clearUpcomingAlarms = function() {
+		$scope.alarms.length = 0 ;
+	};
+	$scope.editUpcomingAlarm = function() {
+	
+	};
+	
+	
 }
 //MyCtrl1.$inject = [];
 
