@@ -4,7 +4,8 @@
 
 
 ////////////////////////// DRAWING OF THE CLOCK FACE /////////////////////
-
+// SOURCE: www.script-tutorials.com/html5-clocks/
+// Thank you for the wonderful sample code! :D
 // draw functions :
 function clear(ctx) { // clear canvas function
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);

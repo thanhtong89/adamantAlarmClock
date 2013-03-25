@@ -85,7 +85,8 @@ function drawClockFace(canvas, ctx, clockImage, clockRadius) { // main drawClock
 
 ////////////////////////////////////////////////////////////////////////
 function ClockController($scope, $timeout) {
-
+	$scope.expiredAlarms = [10, 20, 30, 40];
+	$scope.alarms = ["hello", "giuys"];
 	$scope.clockRadius = 250;
 
 	var myTimeout = $timeout($scope.onTimeout, 1000);

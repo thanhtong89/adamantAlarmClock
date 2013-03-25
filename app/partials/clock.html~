@@ -3,7 +3,7 @@
 <script src="js/clock.js"></script>
 
 
-<p>Clock displayed here.</p>
+<p>Clock displayed here (borrowed shamelessly from <a ref="http://www.script-tutorials.com/html5-clocks/" target="_blank">script-tutorials</a>.)</p>
 <div class="clocks">
     <canvas id="canvas" width="500" height="500"></canvas>
 </div>
@@ -69,8 +69,8 @@ Would love to have a timeline view on this thing! :D
 		</thead>
 		<tbody>
 			<tr ng-repeat="alarm in alarms>">
-				<td>{{expiredAlarm.time}}</td>
-				<td>{{expiredAlarm.name}}</td>
+				<td>{{alarm.timeRemaining}}</td>
+				<td>{{alarm.name}}</td>
 			</tr>
 		</tbody>
 	</table>
