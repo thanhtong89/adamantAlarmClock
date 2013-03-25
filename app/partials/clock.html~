@@ -1,0 +1,77 @@
+
+<link href="css/clock.css" rel="stylesheet" type="text/css" />
+<script src="js/clock.js"></script>
+
+
+<p>Clock displayed here.</p>
+<div class="clocks">
+    <canvas id="canvas" width="500" height="500"></canvas>
+</div>
+
+<!-- Control Panel:
+So the purpose of this app is to allow the user to create temporary storage
+of alarm times they set through the day. Persistence is not guaranteed should they
+close the app -- they must leave it on. That is, until I take this idea further
+and get to implement user account and stuff, then we can talk about saved recurring
+alarms.
+
+[ ] Current date time (auto detect local timezone)
+
+[ ] List of alarms which have gone off since web page is loaded.
+    Expired Alarm Name1
+    Expired Alarm Name2
+
+
+[ ] List of upcoming alarms in chronological order:
+    Timestamp/Time Remaining | Alarm Name
+
+Would love to have a timeline view on this thing! :D
+
+[ ] When an alarm fires:
+	[ ] Background color flashes pink three times
+	[ ] Announcer saying the time.
+	[ ] The alarm goes from second list to first list.
+-->
+
+
+<!-- Adding alarm: 
+[ ] Name and datetime (with timezone support) ==> Add!
+-->
+
+<div>
+	<h2>Expired Alarms</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Time</th>
+				<th>Alarm</th>
+				<th><button ng-click="clearExpiredAlarm()">Clear!</button></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="expiredAlarm in expiredAlarms>">
+				<td>{{expiredAlarm.time}}</td>
+				<td>{{expiredAlarm.name}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div>
+	<h2>Upcoming Alarms</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Time Remaining</th>
+				<th>Alarm</th>
+				<th><button ng-click="clearUpcomingAlarms()">Remove all!</button></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="alarm in alarms>">
+				<td>{{expiredAlarm.time}}</td>
+				<td>{{expiredAlarm.name}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
