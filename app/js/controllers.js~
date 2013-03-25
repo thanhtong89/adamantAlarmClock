@@ -86,12 +86,13 @@ function drawClockFace(canvas, ctx, clockImage, clockRadius) { // main drawClock
 
 ////////////////////////////////////////////////////////////////////////
 function ClockController($scope, $timeout) {
+	
 	var curTime = new Date();
 	$scope.expiredAlarms = [];
 	for (var i = 0; i < 3; i++){
 		var expAlarm = new Object();
 		expAlarm.time = curTime;
-		expAlarm.text = "expAlarm" + toString(i);
+		expAlarm.text = "expAlarm" + i.toString();
 		$scope.expiredAlarms.push(expAlarm);
 	};
 	
@@ -99,18 +100,17 @@ function ClockController($scope, $timeout) {
 	for (var i = 0; i < 3; i++){
 		var alarm = new Object();
 		alarm.timeRemaining = curTime;
-		alarm.text = "alarm" + toString(i);
+		alarm.text = "alarm" + i.toString();
 		$scope.alarms.push(alarm);
 	};
+	
+	
 	$scope.clockRadius = 250;
 
-	var myTimeout = $timeout($scope.onTimeout, 1000);
+	var myTimeout = function () {};
 	
 	$scope.canvas = document.getElementById('canvas');
     $scope.ctx = canvas.getContext('2d');
-
-    // var width = canvas.width;
-    // var height = canvas.height;
 
 	$scope.clockImage = new Image();
 	$scope.clockImage.src = 'images/cface.png';
@@ -121,7 +121,7 @@ function ClockController($scope, $timeout) {
 		myTimeout = $timeout($scope.onTimeout, 1000);		
 	};
 
-	var myTimeout = $timeout($scope.onTimeout, 1000);
+	myTimeout = $timeout($scope.onTimeout, 1000);
 	/////////// VARIOUS METHODS FOR HANDLING LISTS OF ALARMS////
 	
 	$scope.clearExpiredAlarms = function() {
