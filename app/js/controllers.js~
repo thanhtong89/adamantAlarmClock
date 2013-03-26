@@ -53,6 +53,7 @@ function drawClockFace(time, canvas, ctx, clockImage, clockRadius, soundFx) { //
     ctx.lineTo(-15, 25);
     ctx.lineTo(clockRadius * 0.5, 10);
     ctx.lineTo(clockRadius * 0.5, -10);
+    ctx.fillStyle = '#FF0000'; // red
     ctx.fill();
     ctx.restore();
 
@@ -285,8 +286,8 @@ function ClockController($scope, $timeout) {
 	// so if hours == minutes == 0, then seconds can only go down to 30.
 	// must use string so the change in value will be reflected on the controls
 	// since the controls use string too!
-	$scope.announceIntervalHours = 0.toString();
-	$scope.announceIntervalMinutes = 5.toString();
+	$scope.announceIntervalHours = "0";
+	$scope.announceIntervalMinutes = "5";
 	
 	
 	/////

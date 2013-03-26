@@ -53,6 +53,7 @@ function drawClockFace(time, canvas, ctx, clockImage, clockRadius, soundFx) { //
     ctx.lineTo(-15, 25);
     ctx.lineTo(clockRadius * 0.5, 10);
     ctx.lineTo(clockRadius * 0.5, -10);
+    ctx.fillStyle = '#FF0000'; // red
     ctx.fill();
     ctx.restore();
 
@@ -65,6 +66,7 @@ function drawClockFace(time, canvas, ctx, clockImage, clockRadius, soundFx) { //
     ctx.lineTo(-15, 4);
     ctx.lineTo(clockRadius * 0.8, -10);
     ctx.lineTo(clockRadius * 0.8, 10);
+    ctx.fillStyle = "#1E90FF"; // Dodger Blue
     ctx.fill();
     ctx.restore();
 
