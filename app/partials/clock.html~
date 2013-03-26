@@ -4,7 +4,7 @@
 
 
 <div>
-	<h1>Announce time every:</h1>
+	<h1>Announce time every {{announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes."}}</h1>
 	<select ng-model="announceIntervalHours" ng-options="hour for hour in hourIntervalOps">
 	</select>
 	
@@ -17,7 +17,6 @@
 	</select>
 	-->
 	
-	<p>{{"Selected: " + announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes"}}</p>
 </div>
 
 <h3>Clock here (borrowed shamelessly from <a href="http://www.script-tutorials.com/html5-clocks/" target="_blank">script-tutorials</a>.)</h3>
@@ -77,7 +76,7 @@ Would love to have a timeline view on this thing! :D
 			<tr ng-repeat="expiredAlarm in expiredAlarms">
 				<td>{{expiredAlarm.time}}</td>
 				<td>{{expiredAlarm.text}}</td>
-				<td><button ng-click="removeExpiredAlarm()">Remove</button></td>
+				<td><button ng-click="removeExpiredAlarm(expiredAlarm.id)">Remove</button></td>
 			</tr>
 		</tbody>
 	</table>

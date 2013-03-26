@@ -130,9 +130,12 @@ function announceTimeOnly(time, soundFx){
 	}
 	
 	speakNumber(hours, soundFx);
-	speakNumber(minutes, soundFx);
-	soundFx.playSnd(AM_PM_Sound);
 	
+	if (minutes > 0){
+		speakNumber(minutes, soundFx);
+	}
+	
+	soundFx.playSnd(AM_PM_Sound);
 }
 
 // currently only supports n up to 999
@@ -296,6 +299,7 @@ function ClockController($scope, $timeout) {
 	$scope.expiredAlarms = [];
 	for (var i = 0; i < 3; i++){
 		var expAlarm = new Object();
+		expAlarm.id = i;
 		expAlarm.time = curTime;
 		expAlarm.text = "expAlarm " + i.toString();
 		$scope.expiredAlarms.push(expAlarm);
@@ -304,6 +308,7 @@ function ClockController($scope, $timeout) {
 	$scope.alarms = [];
 	for (var i = 0; i < 3; i++){
 		var alarm = new Object();
+		alarm.id = i;
 		alarm.timeRemaining = curTime;
 		alarm.text = "alarm " + i.toString();
 		$scope.alarms.push(alarm);
@@ -382,14 +387,22 @@ function ClockController($scope, $timeout) {
 	$scope.clearExpiredAlarms = function() {
 		$scope.expiredAlarms.length = 0;
 	};
-	$scope.removeExpiredAlarm = function() {
-	
+	$scope.removeExpiredAlarm = function(id) {
+		// seek and destroy!
+		var len = $scope.expiredAlarms.length;
+		while (len--){
+			var alarm = $scope.expiredAlarms[len];
+			if (alarm.id === id){
+				$scope.expiredAlarms.splice(len, 1);
+				break;
+			}
+		}
 	};
 	
 	$scope.clearUpcomingAlarms = function() {
 		$scope.alarms.length = 0 ;
 	};
-	$scope.editUpcomingAlarm = function() {
+	$scope.editUpcomingAlarm = function(id) {
 	
 	};
 	
