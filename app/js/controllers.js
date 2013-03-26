@@ -293,6 +293,16 @@ function ClockController($scope, $timeout) {
 	$scope.announceIntervalHours = "0";
 	$scope.announceIntervalMinutes = "5";
 	
+	$scope.getAnnounceTimeTitle = function(){
+		if  
+		(parseInt($scope.announceIntervalHours) + parseInt($scope.announceIntervalMinutes) > 0) {
+		  return " every " +  $scope.announceIntervalHours  + " hours " + 
+		  					$scope.announceIntervalMinutes + " minutes.";
+		 }
+		 else { 
+		  return ": disabled.";
+		 }
+	}
 	
 	/////
 	var curTime = new Date();

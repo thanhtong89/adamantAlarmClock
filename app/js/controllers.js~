@@ -136,7 +136,6 @@ function announceTimeOnly(time, soundFx){
 	}
 	
 	soundFx.playSnd(AM_PM_Sound);
-	
 }
 
 // currently only supports n up to 999
@@ -294,6 +293,16 @@ function ClockController($scope, $timeout) {
 	$scope.announceIntervalHours = "0";
 	$scope.announceIntervalMinutes = "5";
 	
+	$scope.getAnnounceTimeTitle = function(){
+		if  
+		(parseInt($scope.announceIntervalHours) + parseInt($scope.announceIntervalMinutes) > 0) {
+		  return " every " +  $scope.announceIntervalHours  + " hours " + 
+		  					$scope.announceIntervalMinutes + " minutes.";
+		 }
+		 else { 
+		  return ": disabled";
+		 }
+	}
 	
 	/////
 	var curTime = new Date();

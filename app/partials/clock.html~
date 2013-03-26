@@ -2,9 +2,8 @@
 <link href="css/clock.css" rel="stylesheet" type="text/css" />
 <script src="js/clock.js"></script>
 
-
 <div>
-	<h1>Announce time every {{announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes."}}</h1>
+	<h1>Announce time {{ getAnnounceTimeTitle() }}</h1>
 	<select ng-model="announceIntervalHours" ng-options="hour for hour in hourIntervalOps">
 	</select>
 	
@@ -96,7 +95,7 @@ Would love to have a timeline view on this thing! :D
 			<tr ng-repeat="alarm in alarms">
 				<td>{{alarm.timeRemaining}}</td>
 				<td>{{alarm.text.toString()}}</td>
-				<td><button ng-click="editUpcomingAlarms()">Edit</button></td>
+				<td><button ng-click="editUpcomingAlarms(alarm.id)">Edit</button></td>
 			</tr>
 		</tbody>
 	</table>

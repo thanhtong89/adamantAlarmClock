@@ -2,9 +2,8 @@
 <link href="css/clock.css" rel="stylesheet" type="text/css" />
 <script src="js/clock.js"></script>
 
-
 <div>
-	<h1>Announce time every {{announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes."}}</h1>
+	<h1>Announce time{{ getAnnounceTimeTitle() }}</h1>
 	<select ng-model="announceIntervalHours" ng-options="hour for hour in hourIntervalOps">
 	</select>
 	
