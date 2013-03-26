@@ -3,10 +3,34 @@
 <script src="js/clock.js"></script>
 
 
-<p>Clock displayed here (borrowed shamelessly from <a href="http://www.script-tutorials.com/html5-clocks/" target="_blank">script-tutorials</a>.)</p>
+<div>
+	<h1>Announce time every:</h1>
+	<select ng-model=announceIntervalHours>
+		<option ng-repeat="hour in hourIntervalOps" value="{{hour}}">{{hour}}</option>
+	</select>
+	<select ng-model=announceIntervalMinutes>
+		<option ng-repeat="minute in minuteIntervalOps" value="{{minute}}">{{minute}}</option>
+	</select>
+	<select ng-model=announceIntervalSeconds>
+		<option ng-repeat="second in secondIntervalOps" value="{{second}}">{{second}}</option>
+	</select>
+	
+	<p>{{"Selected: " + announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes " 
++ announceIntervalSeconds + " seconds."}}</p>
+    <p>Announce Interval (hours) : {{announceInterval.hours}} </p>
+</div>
+
+<h3>Clock here (borrowed shamelessly from <a href="http://www.script-tutorials.com/html5-clocks/" target="_blank">script-tutorials</a>.)</h3>
 <div class="clocks">
     <canvas id="canvas" width="500" height="500"></canvas>
 </div>
+
+<!-- All the sounds we shall need here.
+ -->
+<audio id="soundFx" src="sounds/welcome.wav" style="display: none;"></audio>
+
+<input type="text" ng-model="numToSpeech">
+<button ng-click="speakNum()">Speak [{{numToSpeech}}]!</button>
 
 <!-- Control Panel:
 So the purpose of this app is to allow the user to create temporary storage
