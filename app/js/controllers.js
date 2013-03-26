@@ -88,7 +88,7 @@ function drawClockFace(canvas, ctx, clockImage, clockRadius, soundFx) { // main 
     // Note: currently referring to the beginning of the same day.
     var offsetDate = new Date (date.getFullYear(), date.getMonth(), date.getDate(),  0, 0, 0);
 	
-    checkAlarmEvents(600, date, offsetDate, soundFx);
+    checkAlarmEvents(60, date, offsetDate, soundFx);
 }
 
 /**
@@ -108,6 +108,7 @@ function checkAlarmEvents (announceIntervalSecs, currentTime, offset, soundFx){
 	var currentTotalSecs = Math.floor ((currentTime - offset) / 1000);//hours*3600 + minutes*60 + seconds;
 
 	if ( currentTotalSecs  % announceIntervalSecs == 0){
+		soundFx.playSnd("sounds/time_is_now.wav");
 		announceTimeOnly(currentTime, soundFx);
 	}
 }
@@ -120,10 +121,22 @@ function announceTimeOnly(time, soundFx){
 	var hours = time.getHours();
 	var minutes = time.getMinutes();
 	var seconds = time.getSeconds();
+	// default: AM
+	// Rules: 0 hour -->  12  
+	//        >= 12 hour ->  PM
+	//        >=13 hour -> hour = hour - 12
+	
+	var AM_PM_Sound = (hours > 11 ? "sounds/pm.wav" : "sounds/am.wav");
+	if (hours == 0){
+		hours = 12;
+	}
+	else if (hours > 12){
+		hours = hours - 12;
+	}
 	
 	speakNumber(hours, soundFx);
 	speakNumber(minutes, soundFx);
-	
+	soundFx.playSnd(AM_PM_Sound);
 	
 }
 

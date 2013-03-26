@@ -17,7 +17,6 @@
 	
 	<p>{{"Selected: " + announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes " 
 + announceIntervalSeconds + " seconds."}}</p>
-    <p>Announce Interval (hours) : {{announceInterval.hours}} </p>
 </div>
 
 <h3>Clock here (borrowed shamelessly from <a href="http://www.script-tutorials.com/html5-clocks/" target="_blank">script-tutorials</a>.)</h3>
@@ -29,9 +28,10 @@
  -->
 <audio id="soundFx" src="sounds/welcome.wav" style="display: none;"></audio>
 
+<!--
 <input type="text" ng-model="numToSpeech">
 <button ng-click="speakNum()">Speak [{{numToSpeech}}]!</button>
-
+-->
 <!-- Control Panel:
 So the purpose of this app is to allow the user to create temporary storage
 of alarm times they set through the day. Persistence is not guaranteed should they

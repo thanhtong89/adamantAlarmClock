@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <title>The Adamant Alarm Clock</title>
   <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+
 </head>
 <body>
   <ul class="menu">
