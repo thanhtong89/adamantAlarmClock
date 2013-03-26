@@ -298,12 +298,41 @@ function ClockController($scope, $timeout) {
 	// Initializes sound element handler
 	$scope.soundFx = document.getElementById('soundFx');
 	
+	// Needs to support automatic callback so we can call without explicit queue
+	// of sounds to play
+	$scope.soundFx.playing = false; // flag indicating whether playing or not
+	$scope.soundFx.queue  = [];
 	$scope.soundFx.playSnd = function (sourceStr) {
-		this.src = sourceStr;
-		this.play();
+		this.queue.push(sourceStr);
+		if (!this.playing){
+			console.log("playing started");
+			this.playSndRecurse("");
+		}
+		console.log("Now queue is " + this.queue);
 	};
-	
-	
+	$scope.soundFx.playSndRecurse = function (source){
+		this.playing = true;
+		this.src = source;
+		if (source){
+			this.play();
+		}
+		else {
+			this.src =this.queue.shift() ;
+			this.play();
+		}
+		
+	};
+	$scope.soundFx.addEventListener("ended", function (e){
+			console.log("queue is now " + this.queue);
+			var nextSource = this.queue.shift();
+			if (nextSource){
+				this.playSndRecurse(nextSource);
+			}
+			else {
+				this.playing = false;
+			}
+		} );
+
 	//TESTING
 	
 	$scope.speakNum = function (){
