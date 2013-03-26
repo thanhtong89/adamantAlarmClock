@@ -11,11 +11,11 @@ function clear(ctx) { // clear canvas function
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
-function drawClockFace(canvas, ctx, clockImage, clockRadius, soundFx) { // main drawClockFace function
+function drawClockFace(time, canvas, ctx, clockImage, clockRadius, soundFx) { // main drawClockFace function
     clear(ctx); // clear canvas
 
     // get current time
-    var date = new Date();
+    var date = time;
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var seconds = date.getSeconds();
@@ -82,13 +82,6 @@ function drawClockFace(canvas, ctx, clockImage, clockRadius, soundFx) { // main 
     ctx.restore();
 
     ctx.restore();
-    
-    
-    //------------------ Uses the same timestamp for checking alarms -----------
-    // Note: currently referring to the beginning of the same day.
-    var offsetDate = new Date (date.getFullYear(), date.getMonth(), date.getDate(),  0, 0, 0);
-	
-    checkAlarmEvents(20, date, offsetDate, soundFx);
 }
 
 /**
@@ -146,7 +139,6 @@ function speakNumber(n, soundFx){
 	if (n > 999){
 		return;
 	}
-	console.log("less than ten?");
 	if ( n < 10){
 		switch (n){
 			case 0:
@@ -183,12 +175,10 @@ function speakNumber(n, soundFx){
 		
 		return;
 	}
-	console.log("ten?");
 	if (n == 10){
 		soundFx.playSnd("sounds/ten.wav");
 		return;
 	}
-	console.log("maybe 11-19? " + n);
 	if (10 < n && n < 20){
 		switch (n){
 			case 11:
@@ -201,7 +191,6 @@ function speakNumber(n, soundFx){
 				soundFx.playSnd("sounds/thirteen.wav");
 				break;
 			case 14:
-				console.log("fourteen!");
 				soundFx.playSnd("sounds/fourteen.wav");
 				break;
 			case 15:
@@ -222,13 +211,11 @@ function speakNumber(n, soundFx){
 		};
 		return;
 	}
-	console.log("About to go deepest");
 	// this breaks down a number like so: 356 ==> 300, 50, 6
 	var hundreds = Math.floor (n / 100) * 100;
 	var tens     = Math.floor ( n / 10) * 10 - hundreds ;
 	var units    = n - hundreds - tens;
 	
-	console.log("hundred = " + hundreds + " tens " + tens + " units = " + units);  
 	if (hundreds > 0) {
 		speakNumber(hundreds / 100, soundFx);
 		soundFx.playSnd("sounds/hundred.wav");
@@ -247,7 +234,6 @@ function speakNumber(n, soundFx){
 					soundFx.playSnd("sounds/thirty.wav");
 					break;
 				case 40:
-					console.log("Indeed forty");
 					soundFx.playSnd("sounds/forty.wav");
 					break;
 				case 50:
@@ -278,17 +264,30 @@ function ClockController($scope, $timeout) {
 	// for populating the datalists regarding time announcement interval
 	$scope.hourIntervalOps = [];
 	$scope.minuteIntervalOps = [];
-	$scope.secondIntervalOps = [];
+	//$scope.secondIntervalOps = [];
 	
-	for (var h = 0; h < 24; h++){
-		$scope.hourIntervalOps.push(h);
-	}
+	$scope.announceIntervalHours = null;
+	$scope.announceIntervalMinutes = null;
+	
 	for (var m = 0; m < 60; m++){
-		$scope.minuteIntervalOps.push(m);
+		$scope.minuteIntervalOps.push(m.toString());
 	}
-	for (var s = 0; s < 60; s++){
-		$scope.secondIntervalOps.push(s);
+	for (var h = 0; h < 24; h++){
+		$scope.hourIntervalOps.push(h.toString());
 	}
+	
+	
+	//for (var s = 0; s < 60; s++){
+	//	$scope.secondIntervalOps.push(s);
+	//}
+	
+	// enforce rule: minimum announcement interval is 30 seconds.
+	// so if hours == minutes == 0, then seconds can only go down to 30.
+	// must use string so the change in value will be reflected on the controls
+	// since the controls use string too!
+	$scope.announceIntervalHours = 0.toString();
+	$scope.announceIntervalMinutes = 5.toString();
+	
 	
 	/////
 	var curTime = new Date();
@@ -318,10 +317,8 @@ function ClockController($scope, $timeout) {
 	$scope.soundFx.playSnd = function (sourceStr) {
 		this.queue.push(sourceStr);
 		if (!this.playing){
-			console.log("playing started");
 			this.playSndRecurse("");
 		}
-		console.log("Now queue is " + this.queue);
 	};
 	$scope.soundFx.playSndRecurse = function (source){
 		this.playing = true;
@@ -336,7 +333,6 @@ function ClockController($scope, $timeout) {
 		
 	};
 	$scope.soundFx.addEventListener("ended", function (e){
-			console.log("queue is now " + this.queue);
 			var nextSource = this.queue.shift();
 			if (nextSource){
 				this.playSndRecurse(nextSource);
@@ -346,11 +342,7 @@ function ClockController($scope, $timeout) {
 			}
 		} );
 
-	//TESTING
 	
-	$scope.speakNum = function (){
-		speakNumber($scope.numToSpeech, $scope.soundFx);
-	}
 	///////// END TESTING
 	
 	$scope.clockRadius = 250;
@@ -363,10 +355,18 @@ function ClockController($scope, $timeout) {
 	$scope.clockImage.src = 'images/cface.png';
 
 	$scope.onTimeout = function(){
-		drawClockFace($scope.canvas, $scope.ctx, $scope.clockImage, 
+		var time = new Date();
+		drawClockFace(time, $scope.canvas, $scope.ctx, $scope.clockImage, 
 				$scope.clockRadius, $scope.soundFx);
+
 		
+		var offsetDate = new Date (time.getFullYear(), time.getMonth(), time.getDate(),  0, 0, 0);
+		// don't check more frequently than 30 seconds
+		var checkAlarmPeriodSecs = parseInt($scope.announceIntervalHours)*3600 + 
+			parseInt($scope.announceIntervalMinutes)*60 ;
+    	checkAlarmEvents(checkAlarmPeriodSecs, time, offsetDate, soundFx);
 		myTimeout = $timeout($scope.onTimeout, 1000);		
+		
 	};
 
 	myTimeout = $timeout($scope.onTimeout, 1000);

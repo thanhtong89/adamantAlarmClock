@@ -5,19 +5,19 @@
 
 <div>
 	<h1>Announce time every:</h1>
-	<select ng-model=announceIntervalHours>
-		<option ng-repeat="hour in hourIntervalOps" value="{{hour}}">{{hour}}</option>
-	</select>
-	<select ng-model=announceIntervalMinutes>
-		<option ng-repeat="minute in minuteIntervalOps" value="{{minute}}">{{minute}}</option>
-	</select>
-	<select ng-model=announceIntervalSeconds>
-		<option ng-repeat="second in secondIntervalOps" value="{{second}}">{{second}}</option>
+	<select ng-model="announceIntervalHours" ng-options="hour for hour in hourIntervalOps">
 	</select>
 	
-	<p>{{"Selected: " + announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes " 
-+ announceIntervalSeconds + " seconds."}}</p>
-    <p>Announce Interval (hours) : {{announceInterval.hours}} </p>
+	<select ng-model="announceIntervalMinutes" ng-options="minute for minute in minuteIntervalOps">
+	</select>
+	
+	<!--
+	<select ng-model="announceIntervalSeconds">
+		<option ng-repeat="second in secondIntervalOps" value="{{second}}">{{second}}</option>
+	</select>
+	-->
+	
+	<p>{{"Selected: " + announceIntervalHours  + " hours " + announceIntervalMinutes + " minutes"}}</p>
 </div>
 
 <h3>Clock here (borrowed shamelessly from <a href="http://www.script-tutorials.com/html5-clocks/" target="_blank">script-tutorials</a>.)</h3>
